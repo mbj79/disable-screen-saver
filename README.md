@@ -14,6 +14,14 @@ Manually changing the power settings on each login gets tedious. In some cases i
 
 ## How to use
 
-1. Copy `disable-screen-saver.vbs` to some folder.
-2. Use Windows Task Scheduler to schedule the script to run as often as necessary
+1. Copy `disable-screen-lock.vbs` to some folder.
+2. Use Windows Task Scheduler to execute the script as often as necessary
     * Recommendation: Run only when user is logged on (does not require storing password)
+
+## What does the script do?
+
+It simply executes the command-line `powercfg /SETACVALUEINDEX SCHEME_CURRENT 7516b95f-f776-4464-8c53-06167f40cc99 3c0bc021-c8a8-4e07-a973-6b14cbcb2b7e 0`. 
+
+## But why .vbs?
+
+Because running the `powercfg` command directly from Task Scheduler causes a console window to appear for a fraction of a second, disrupting the focus from whatever the user happens to be working with. There is no way to configure a Task to run with the console window hidden. The default Windows Script Host (`wscript.exe`), does not create any console window, and its `WScript.Shell` interface supports specifying the window state when running console programs.
